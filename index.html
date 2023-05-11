@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
+<title>Welcome</title>
+</head>
+<body>
+<div id="modal-container" class="hide modl modal-bg">
+    <img src="" alt="" class="" id="ph-gallery">
+    <!--<button id="close-btn">X</button>-->
+</div>
+<h1 hidden id="title">Parks</h1>
+<div class="container">
+    <button id="bth">Go to Gallary</button>
+    <img src="https://img.static-rmg.be/a/view/q75/w/h/2349905/liam-macleod-mvzfdeieyls-unsplash-jpg.jpg" alt="" class="photo hide">
+    <img src="https://e3mrd2mxwu8.exactdn.com/wp-content/uploads/2018/09/DSC_2747.jpg?strip=all&lossy=1&w=716&ssl=1" alt="" class="photo hide">
+    <img src="https://www.brusselspictures.com/wp-content/photos/ParcLeopold/parc.leopold.chemin.jpg" alt="" class="photo hide">
+    <img src="https://www.agglo-pvm.fr/fileadmin/Pratique/Parcs_et_jardins/GrandePrairie_Parc_de_noisiel.JPG" alt="" class="photo hide">
+
+</div>
+<div hidden class="par">
+    <p class="description">Welcome to test Gallery using Jquery.</p>
+</div>
+<style>
+    body{
+        background-color: rgba(0, 0, 0, 0.932);
+        overflow-x: hidden;
+    }
+    #close-btn{
+        color: #fff;
+        background-color: #F8AD00;
+        padding: 1%;
+    }
+    #title{
+        font-size: calc(2vh + 2vw);
+        text-align: center;
+        color: white;
+    }
+    .description{
+        text-align: center;
+        color: white;
+    }
+    .par{
+       
+        justify-content: center;
+        align-items: center;
+    }
+    #bth{
+        padding: 1%;
+        cursor: pointer;
+        background-color: #fff;
+    }
+    #modal-container{
+        opacity: 0;
+        z-index: 100;
+        height: 100%;
+        width: 100%;
+        background: rgb(0 0 0 / 47%);
+        position: fixed;
+        text-align: center;
+        overflow: hidden;
+      
+    }
+    .container{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        align-items:center;
+    }
+    .photo{
+        width: calc(10vh + 20vw);
+        height: calc(10vh + 10vw);
+    }
+    .zoom{
+        transform: scale(1.1);
+        transition: 0.2s ease-in-out;
+    }
+    .modl{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+    }
+    .hide{
+        display: none;
+    }
+    #ph-gallery{
+        width: calc(10vh + 50vw);
+        height: calc(10vh + 30vw);
+    }
+    @media only screen and (max-width: calc(35vh + 55vw)) {
+        .photo:nth-child(5){
+            margin-top: 3%;
+        }
+        .photo:nth-child(4){
+            margin-top: 3%;
+        }
+    }
+    @media only screen and (max-width: calc(10vh + 75vw)) {
+        .photo:nth-child(2){
+            margin-bottom: 3%;
+        }
+    }
+    @media screen and (max-width: calc(30vh + 86.6vw)) and (min-width: calc(10vh + 75vw)){
+        .photo:last-child{
+            margin-top: 3%;
+        }
+    }
+
+    @keyframes FadeIn {
+        0%{
+            opacity: 0;
+           
+        }
+        100%{
+            opacity: 1;
+          
+        }
+    }
+    @keyframes FadeOut {
+        0%{
+            opacity: 1;
+        }
+        100%{
+            opacity: 0;
+            display: none;
+        }
+    }
+
+
+</style>
+
+<script>
+    $(document).ready(function(){
+        $(".par").show(1000, function(){
+        });
+        $("#title").show(1000, function(){
+        });
+        $(".photo").hover(function(){
+            $(this).addClass("zoom");
+            $(this).css({"transition": "transform 0.3s ease-in-out"});
+        });
+        $(".photo").mouseleave(function(){
+            $(this).removeClass("zoom");
+        });
+        $("#bth").click(function(){
+            $("img").removeClass("hide");
+            $(".par").css("display", "none");;
+            $("h1").removeClass("hide");
+            $("#bth").addClass("hide");
+        });
+        $(".photo").click(function(){
+            var src = $(this).attr('src');
+            $("#ph-gallery").attr("src", src);
+            $('#modal-container').css("display", "flex");
+            $("#modal-container").css({"animation": "FadeIn .5s ease-in-out forwards"});
+        });
+        //$("#ph-gallery").click(function(){
+          //  $("#modal-container").css({"animation": "FadeOut .5s ease-in-out forwards"});
+        //});
+        $("#modal-container").click(function(e){
+            if ($(e.target).hasClass("modal-bg")) {
+                $("#modal-container").css({"animation": "FadeOut .5s ease-in-out forwards" });
+            }
+           //$("#modal-container")
+        });
+
+        $("#close-btn").click(function() {
+            $("#modal-container").css({"animation": "FadeOut .5s ease-in-out forwards" });
+        });
+
+        $("#modal-container").on("animationend", function(event) {
+            if (event.originalEvent.animationName === "FadeOut") {
+                $(this).css("display", "none");
+            }
+        });
+    })
+</script>
+</body>
+</html>
